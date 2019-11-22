@@ -17,8 +17,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var analyzeResult: UILabel!
     
-    var happyScore = 0
-    var sadScore = 0
+    
     
     
     // MARK: Methods
@@ -34,44 +33,43 @@ class ViewController: UIViewController {
         //clear out the output label from tge last time the analyze button was pressed
         analyzeResult.text = ""
         
-        guard let userINputAsString = userInput.text else {
+        guard let userInputAsString = userInput.text,
+                    userInputAsString.count > 0,
+                    userInputAsString.count <= 255 else {
             analyzeResult.text = "Please enter a string with at least 1 and no more than 255 characters."
             return
         }
-        if userINputAsString.count > 255 {
-            analyzeResult.text = "Please enter a string with at least 1 and no more than 255 characters."
-        }
-        if userINputAsString.count == 0 {
-            analyzeResult.text = "Please enter a string to analyze."
-        }
-        for eachScalar in userINputAsString.unicodeScalars {
-            var scalarValues = eachScalar.value
-            var scalarValuesAsString = String(scalarValues)
+        var happyScore = 0
+        var sadScore = 0
+        
+        
+        for eachScalar in userInputAsString.unicodeScalars {
+            let scalarValues = eachScalar.value
             
-            switch scalarValuesAsString {
-            case "158515":
+            switch scalarValues {
+            case 128515:
                 happyScore += 1
-            case "158522":
+            case 128522:
                 happyScore += 1
-            case "158516":
+            case 128516:
                 happyScore += 1
-            case "158578":
+            case 128578:
                 happyScore += 1
-            case "9785":
+            case 9785:
                 sadScore += 1
-            case "128533":
+            case 128533:
                 sadScore += 1
-            case "128577":
+            case 128577:
                 sadScore += 1
-            case "128532":
+            case 128532:
                 sadScore += 1
             default:
                 happyScore += 0
             }
-            
-           
+        
             
         }
+        
         if happyScore == sadScore && happyScore != 0 && sadScore != 0 {
             analyzeResult.text = "unsure"
         }else if happyScore > sadScore{
